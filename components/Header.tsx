@@ -1,91 +1,59 @@
+import React from 'react';
 import {
   Box,
   Flex,
-  HStack,
-  Stack,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-
-interface Props {
-  children: React.ReactNode;
-}
 
 const Links = [
   { name: 'INICIO', url: '/' },
   { name: 'ACERCA DE NOSOTROS', url: '/about' },
 ];
 
-const NavLink = (props: Props) => {
-  const { children } = props;
-
+const NavLink = ({ children, url }) => {
   return (
-    <Flex
-      px={2}
-      py={1}
-      w={200}
-      h={'100px'}
-      alignItems="center"
-      justifyContent="center"
-      textColor="white"
-      borderWidth={2}
-      borderColor={'white'}
-      bgColor={'transparent'}
-      _hover={{
-        textDecoration: 'none',
-        bg: 'white',
-        textColor: 'gray',
-      }}
-    >
-      {children}
-    </Flex>
+    <Link href={url} passHref>
+      <Box
+        p={4}
+        cursor="pointer"
+        transition="all 0.3s"
+        _hover={{
+          transform: 'scale(1.1)',
+        }}
+      >
+        {children}
+      </Box>
+    </Link>
   );
 };
 
-export default function Header() {
+const Header = () => {
   return (
-    <>
-      <Box
-        bgImage="url('https://www.ibm.com/blog/wp-content/uploads/2023/03/What-is-Generative-AI-what-are-Foundation-Models-and-why-do-they-matter-1200x630.jpg')"
-        px={4}
-        position="relative"
-        backgroundPosition="center"
-        backgroundRepeat="no-repeat"
-        height={500}
-        brightness="40%"
+    <Box
+      bgImage="url('https://www.ibm.com/blog/wp-content/uploads/2023/03/What-is-Generative-AI-what-are-Foundation-Models-and-why-do-they-matter-1200x630.jpg')"
+      bgSize="cover"
+      bgPosition="center"
+      color="white"
+    >
+      <Flex
+        p={4}
+        alignItems="center"
+        justifyContent="space-between"
+        background="rgba(0, 0, 0, 0.6)"
       >
-        <Box
-          position="absolute"
-          h={'100%'}
-          w={'100%'}
-          // top={100}
-        >
-          <Stack
-            spacing={10}
-            alignItems={'center'}
-            h={'100%'}
-            justifyContent="center"
-          >
-            <Text fontSize="4xl" color={'white'}>
-              Machine Learning ADA School
-            </Text>
-            <HStack
-              as={'nav'}
-              spacing={1}
-              display={{ base: 'none', md: 'flex' }}
-            >
-              {Links.map((link) => (
-                <Link key={link.name} href={link.url}>
-                  <NavLink >
-                    {link.name}
-                  </NavLink>
-                </Link>  
-              ))}
-            </HStack>
-          </Stack>
-        </Box>
-      </Box>
-    </>
+        <Text fontSize="4xl">Machine Learning ADA School</Text>
+        <Flex>
+          {Links.map((link) => (
+            <NavLink key={link.name} url={link.url}>
+              {link.name}
+            </NavLink>
+          ))}
+        </Flex>
+      </Flex>
+    </Box>
   );
-}
+};
+
+export default Header;
